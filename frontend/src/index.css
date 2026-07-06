@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  --color-dark-900: #030712;
+  --color-dark-800: #0f172a;
+  --color-dark-700: #1e293b;
+  --color-dark-600: #334155;
+  --color-dark-500: #64748b;
+  --color-cyan-400: #22d3ee;
+  --color-cyan-500: #06b6d4;
+  --color-cyan-600: #0891b2;
+  --color-emerald-400: #34d399;
+  --color-emerald-500: #10b981;
+  --color-rose-500: #f43f5e;
+  --color-amber-500: #f59e0b;
+}
+
+@utility glass-panel {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@utility glass-card {
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@utility glow-text {
+  text-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
+}
+
+/* Custom dark scrollbars and globals */
+body {
+  background-image: radial-gradient(circle at 50% 0%, #0f172a 0%, #030712 70%);
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #030712;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+.glass-card:hover {
+  background: rgba(30, 41, 59, 0.6);
+  border-color: rgba(34, 211, 238, 0.25);
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.05);
+}
