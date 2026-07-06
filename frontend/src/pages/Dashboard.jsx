@@ -9,6 +9,7 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid,
   PieChart, Pie, Cell, AreaChart, Area, Legend
 } from 'recharts';
+import API_BASE_URL from "../config/api";
 
 const COLORS = ['#06b6d4', '#10b981', '#f43f5e', '#f59e0b', '#6366f1', '#ec4899'];
 
@@ -24,7 +25,7 @@ export default function Dashboard() {
       if (!token) return;
 
       try {
-        const res = await axios.get('http://localhost:8080/api/reports/dashboard', {
+        const res = await axios.get('${API_BASE_URL}/api/reports/dashboard', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setStats(res.data);

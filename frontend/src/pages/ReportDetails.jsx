@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import ScoreGauge from '../components/ScoreGauge';
 import FileTree from '../components/FileTree';
+import API_BASE_URL from "../config/api";
 
 export default function ReportDetails() {
   const { projectId } = useParams();
@@ -33,8 +34,8 @@ export default function ReportDetails() {
     if (!token) return;
 
     const url = reportId 
-      ? `http://localhost:8080/api/reports/detail/${reportId}`
-      : `http://localhost:8080/api/projects/report/${projectId}`;
+      ? `${API_BASE_URL}/api/reports/detail/${reportId}`
+      : `${API_BASE_URL}/api/projects/report/${projectId}`;
 
     try {
       const res = await axios.get(url, {
@@ -54,7 +55,7 @@ export default function ReportDetails() {
     if (!newTag.trim()) return;
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.post(`http://localhost:8080/api/projects/${projectId}/tags`, { tag: newTag.trim() }, {
+      const res = await axios.post(`${API_BASE_URL}/api/projects/${projectId}/tags`, { tag: newTag.trim() }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setTags(res.data.tags || []);
@@ -68,7 +69,7 @@ export default function ReportDetails() {
   const handleDeleteTag = async (tagToDelete) => {
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.delete(`http://localhost:8080/api/projects/${projectId}/tags/${tagToDelete}`, {
+      const res = await axios.delete(`${API_BASE_URL}/api/projects/${projectId}/tags/${tagToDelete}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setTags(res.data.tags || []);
@@ -84,13 +85,13 @@ export default function ReportDetails() {
 
     try {
       // Fetch History Runs
-      const histRes = await axios.get(`http://localhost:8080/api/reports/${projectId}/history`, {
+      const histRes = await axios.get(`${API_BASE_URL}/api/reports/${projectId}/history`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setHistoryList(histRes.data);
 
       // Fetch Tree Structure
-      const treeRes = await axios.get(`http://localhost:8080/api/reports/${projectId}/structure`, {
+      const treeRes = await axios.get(`${API_BASE_URL}/api/reports/${projectId}/structure`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setTreeData(treeRes.data);
@@ -142,15 +143,15 @@ export default function ReportDetails() {
   const suggestionCount = staticFindings.filter(f => f.severity === 'Suggestion' || f.severity === 'Good Practice').length;
 
   const handleDownloadPdf = () => {
-    window.open(`http://localhost:8080/api/projects/download/${report.id}`, '_blank');
+    window.open(`${API_BASE_URL}/api/projects/download/${report.id}`, '_blank');
   };
 
   const handleDownloadJson = () => {
-    window.open(`http://localhost:8080/api/reports/export/json/${report.id}`, '_blank');
+    window.open(`${API_BASE_URL}/api/reports/export/json/${report.id}`, '_blank');
   };
 
   const handleDownloadHtml = () => {
-    window.open(`http://localhost:8080/api/reports/export/html/${report.id}`, '_blank');
+    window.open(`${API_BASE_URL}/api/reports/export/html/${report.id}`, '_blank');
   };
 
   return (

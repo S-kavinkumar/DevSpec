@@ -5,6 +5,7 @@ import {
   Trash2, Award, Clock, Terminal, AlertTriangle, Play, RefreshCw, 
   Download, HardDrive, Cpu, ShieldCheck
 } from 'lucide-react';
+import API_BASE_URL from "../config/api";
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState(null);
@@ -28,25 +29,25 @@ export default function AdminDashboard() {
     try {
       const headers = { Authorization: `Bearer ${token}` };
       
-      const statsRes = await axios.get('http://localhost:8080/api/admin/analytics', { headers });
+      const statsRes = await axios.get('${API_BASE_URL}/api/admin/analytics', { headers });
       setStats(statsRes.data);
 
-      const aiRes = await axios.get('http://localhost:8080/api/admin/ai-analytics', { headers });
+      const aiRes = await axios.get('${API_BASE_URL}/api/admin/ai-analytics', { headers });
       setAiStats(aiRes.data);
 
-      const usersRes = await axios.get('http://localhost:8080/api/admin/users', { headers });
+      const usersRes = await axios.get('${API_BASE_URL}/api/admin/users', { headers });
       setUsers(usersRes.data);
 
-      const jobsRes = await axios.get('http://localhost:8080/api/admin/active-jobs', { headers });
+      const jobsRes = await axios.get('${API_BASE_URL}/api/admin/active-jobs', { headers });
       setActiveJobs(jobsRes.data);
 
-      const failRes = await axios.get('http://localhost:8080/api/admin/failures', { headers });
+      const failRes = await axios.get('${API_BASE_URL}/api/admin/failures', { headers });
       setFailures(failRes.data);
 
-      const logRes = await axios.get('http://localhost:8080/api/admin/logs', { headers });
+      const logRes = await axios.get('${API_BASE_URL}/api/admin/logs', { headers });
       setLogs(logRes.data);
 
-      const healthRes = await axios.get('http://localhost:8080/api/admin/health', { headers });
+      const healthRes = await axios.get('${API_BASE_URL}/api/admin/health', { headers });
       setHealth(healthRes.data);
 
     } catch (err) {
@@ -67,7 +68,7 @@ export default function AdminDashboard() {
     if (!window.confirm(`Are you sure you want to change user role to ${newRole}?`)) return;
 
     try {
-      await axios.put(`http://localhost:8080/api/admin/users/${userId}/role`, { role: newRole }, {
+      await axios.put(`${API_BASE_URL}/api/admin/users/${userId}/role`, { role: newRole }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchData();
@@ -81,7 +82,7 @@ export default function AdminDashboard() {
     if (!window.confirm('Are you sure you want to delete this user? This cannot be undone.')) return;
 
     try {
-      await axios.delete(`http://localhost:8080/api/admin/users/${userId}`, {
+      await axios.delete(`${API_BASE_URL}/api/admin/users/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchData();
@@ -93,7 +94,7 @@ export default function AdminDashboard() {
   const handleDownloadBackup = async () => {
     const token = localStorage.getItem('token');
     try {
-      const response = await axios.get('http://localhost:8080/api/admin/backup/download', {
+      const response = await axios.get('${API_BASE_URL}/api/admin/backup/download', {
         headers: { Authorization: `Bearer ${token}` },
         responseType: 'blob'
       });

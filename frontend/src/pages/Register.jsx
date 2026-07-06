@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Terminal, Lock, User, Mail, AlertCircle } from 'lucide-react';
+import API_BASE_URL from "../config/api";
 
 export default function Register() {
   const [username, setUsername] = useState('');
@@ -17,7 +18,7 @@ export default function Register() {
     setLoading(true);
 
     try {
-      const res = await axios.post('http://localhost:8080/api/auth/register', {
+      const res = await axios.post('${API_BASE_URL}/api/auth/register', {
         username,
         email,
         password,

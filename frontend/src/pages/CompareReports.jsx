@@ -5,6 +5,7 @@ import {
   ChevronLeft, ArrowUpDown, TrendingUp, TrendingDown, Minus, 
   Sparkles, ShieldCheck, Activity, Award, AlertCircle 
 } from 'lucide-react';
+import API_BASE_URL from "../config/api";
 
 export default function CompareReports() {
   const { projectId } = useParams();
@@ -23,7 +24,7 @@ export default function CompareReports() {
       if (!token) return;
 
       try {
-        const historyRes = await axios.get(`http://localhost:8080/api/reports/${projectId}/history`, {
+        const historyRes = await axios.get(`${API_BASE_URL}/api/reports/${projectId}/history`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setReports(historyRes.data);
@@ -35,7 +36,7 @@ export default function CompareReports() {
         }
 
         // Fetch project name
-        const projRes = await axios.get(`http://localhost:8080/api/projects/report/${projectId}`, {
+        const projRes = await axios.get(`${API_BASE_URL}/api/projects/report/${projectId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setProjectName(projRes.data.projectName);
@@ -60,7 +61,7 @@ export default function CompareReports() {
         setComparison(null);
         const token = localStorage.getItem('token');
         try {
-          const res = await axios.get(`http://localhost:8080/api/reports/compare?reportId1=${report1Id}&reportId2=${report2Id}`, {
+          const res = await axios.get(`${API_BASE_URL}/api/reports/compare?reportId1=${report1Id}&reportId2=${report2Id}`, {
             headers: { Authorization: `Bearer ${token}` }
           });
           setComparison(res.data);
@@ -88,7 +89,7 @@ export default function CompareReports() {
 
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.get(`http://localhost:8080/api/reports/compare?reportId1=${report1Id}&reportId2=${report2Id}`, {
+      const res = await axios.get(`${API_BASE_URL}/api/reports/compare?reportId1=${report1Id}&reportId2=${report2Id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setComparison(res.data);

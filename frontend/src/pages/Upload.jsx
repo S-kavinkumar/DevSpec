@@ -5,6 +5,7 @@ import {
   Upload as UploadIcon, GitBranch, Terminal, AlertCircle, CheckCircle2, 
   Loader2, Sparkles, XCircle, Clock, FileCode, CheckSquare
 } from 'lucide-react';
+import API_BASE_URL from "../config/api";
 
 const PIPELINE_STAGES = [
   { key: 'QUEUED', label: 'Queued in Pool' },
@@ -42,13 +43,13 @@ export default function Upload() {
     setError('');
     const tokenLocal = localStorage.getItem('token');
     try {
-      const branchesRes = await axios.get(`http://localhost:8080/api/projects/git/branches`, {
+      const branchesRes = await axios.get(`${API_BASE_URL}/api/projects/git/branches`, {
         params: { repoUrl, token },
         headers: { Authorization: `Bearer ${tokenLocal}` }
       });
       setBranches(branchesRes.data);
       
-      const tagsRes = await axios.get(`http://localhost:8080/api/projects/git/tags`, {
+      const tagsRes = await axios.get(`${API_BASE_URL}/api/projects/git/tags`, {
         params: { repoUrl, token },
         headers: { Authorization: `Bearer ${tokenLocal}` }
       });
@@ -74,7 +75,7 @@ export default function Upload() {
     if (!repoUrl || !branchName) return;
     const tokenLocal = localStorage.getItem('token');
     try {
-      const res = await axios.get(`http://localhost:8080/api/projects/git/commits`, {
+      const res = await axios.get(`${API_BASE_URL}/api/projects/git/commits`, {
         params: { repoUrl, token, branchOrTag: branchName },
         headers: { Authorization: `Bearer ${tokenLocal}` }
       });
@@ -135,7 +136,7 @@ export default function Upload() {
 
     const tokenLocal = localStorage.getItem('token');
     try {
-      const res = await axios.post('http://localhost:8080/api/projects/upload/zip', formData, {
+      const res = await axios.post('${API_BASE_URL}/api/projects/upload/zip', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${tokenLocal}`,
@@ -166,7 +167,7 @@ export default function Upload() {
     const tokenLocal = localStorage.getItem('token');
     try {
       const res = await axios.post(
-        'http://localhost:8080/api/projects/upload/git',
+        '${API_BASE_URL}/api/projects/upload/git',
         { 
           repoUrl, 
           token,
@@ -196,7 +197,7 @@ export default function Upload() {
 
     const tokenLocal = localStorage.getItem('token');
     try {
-      await axios.post(`http://localhost:8080/api/projects/analysis/cancel/${analysisId}`, {}, {
+      await axios.post(`${API_BASE_URL}/api/projects/analysis/cancel/${analysisId}`, {}, {
         headers: { Authorization: `Bearer ${tokenLocal}` }
       });
       setCurrentStatus('CANCELLED');
@@ -211,7 +212,7 @@ export default function Upload() {
   useEffect(() => {
     if (!analysisId) return;
 
-    const eventSource = new EventSource(`http://localhost:8080/api/projects/progress/${analysisId}`);
+    const eventSource = new EventSource(`${API_BASE_URL}/api/projects/progress/${analysisId}`);
 
     eventSource.addEventListener('progress', (e) => {
       try {
@@ -255,7 +256,7 @@ export default function Upload() {
     if (!analysisId) return;
     const tokenLocal = localStorage.getItem('token');
     try {
-      const res = await axios.get(`http://localhost:8080/api/projects/status/analysis/${analysisId}`, {
+      const res = await axios.get(`${API_BASE_URL}/api/projects/status/analysis/${analysisId}`, {
         headers: { Authorization: `Bearer ${tokenLocal}` }
       });
       const { status, stage, errorMessage } = res.data;

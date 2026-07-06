@@ -5,6 +5,7 @@ import {
   History as HistoryIcon, Files, GitBranch, AlertCircle, ArrowRight, 
   ExternalLink, Search, Filter, ArrowUpDown 
 } from 'lucide-react';
+import API_BASE_URL from "../config/api";
 
 export default function History() {
   const [history, setHistory] = useState([]);
@@ -42,7 +43,7 @@ export default function History() {
     params.append('sortOrder', sortOrder);
 
     try {
-      const res = await axios.get(`http://localhost:8080/api/projects/history?${params.toString()}`, {
+      const res = await axios.get(`${API_BASE_URL}/api/projects/history?${params.toString()}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setHistory(res.data);
