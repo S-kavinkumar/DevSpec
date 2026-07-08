@@ -25,7 +25,7 @@ export default function Dashboard() {
       if (!token) return;
 
       try {
-        const res = await axios.get('${API_BASE_URL}/api/reports/dashboard', {
+        const res = await axios.get(`${API_BASE_URL}/api/reports/dashboard`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setStats(res.data);

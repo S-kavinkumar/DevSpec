@@ -136,7 +136,7 @@ export default function Upload() {
 
     const tokenLocal = localStorage.getItem('token');
     try {
-      const res = await axios.post('${API_BASE_URL}/api/projects/upload/zip', formData, {
+      const res = await axios.post(`${API_BASE_URL}/api/projects/upload/zip`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${tokenLocal}`,
@@ -167,7 +167,7 @@ export default function Upload() {
     const tokenLocal = localStorage.getItem('token');
     try {
       const res = await axios.post(
-        '${API_BASE_URL}/api/projects/upload/git',
+        `${API_BASE_URL}/api/projects/upload/git`,
         { 
           repoUrl, 
           token,

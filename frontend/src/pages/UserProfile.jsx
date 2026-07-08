@@ -27,11 +27,11 @@ export default function UserProfile() {
     try {
       const headers = { Authorization: `Bearer ${token}` };
       
-      const profileRes = await axios.get('${API_BASE_URL}/api/profile', { headers });
+      const profileRes = await axios.get(`${API_BASE_URL}/api/profile`, { headers });
       setProfile(profileRes.data);
       setEmail(profileRes.data.email);
 
-      const notifRes = await axios.get('${API_BASE_URL}/api/notifications', { headers });
+      const notifRes = await axios.get(`${API_BASE_URL}/api/notifications`, { headers });
       setNotifications(notifRes.data);
 
     } catch (err) {
@@ -64,7 +64,7 @@ export default function UserProfile() {
         payload.newPassword = newPassword;
       }
 
-      await axios.put('${API_BASE_URL}/api/profile', payload, {
+      await axios.put(`${API_BASE_URL}/api/profile`, payload, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -93,7 +93,7 @@ export default function UserProfile() {
   const handleMarkAllRead = async () => {
     const token = localStorage.getItem('token');
     try {
-      await axios.post('${API_BASE_URL}/api/notifications/read-all', {}, {
+      await axios.post(`${API_BASE_URL}/api/notifications/read-all`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchProfileAndNotifications();

@@ -18,12 +18,12 @@ export default function SystemHealth() {
     if (!token) return;
 
     try {
-      const healthRes = await axios.get('${API_BASE_URL}/api/system/health', {
+      const healthRes = await axios.get(`${API_BASE_URL}/api/system/health`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setHealth(healthRes.data);
 
-      const logsRes = await axios.get('${API_BASE_URL}/api/system/audit-logs', {
+      const logsRes = await axios.get(`${API_BASE_URL}/api/system/audit-logs`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setLogs(logsRes.data);
